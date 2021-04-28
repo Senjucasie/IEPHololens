@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Basic.unity
+    guid: 14a5c7c5f8ddeaf45a5d53ea5208a3e1
+  - enabled: 1
+    path: Assets/Scenes/HandCoach.unity
+    guid: 58e887502677eb649950ada695c4ad38
+  - enabled: 1
+    path: Assets/Scenes/Environment.unity
+    guid: a8e85340dc6ee1a449b26751046b81b1
+  m_configObjects: {}
