@@ -334,7 +334,7 @@ namespace Microsoft.MixedReality.Toolkit.UI
         /// <remarks>
         /// Useful for checking when a click event occurs.
         /// </remarks>
-        public int ClickCount { get; private set; }
+        public int ClickCount;// { get; private set; }
 
         #region States
 
