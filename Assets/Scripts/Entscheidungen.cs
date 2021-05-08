@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Entscheidungen : MonoBehaviour
 {
+   // public List<GameObject> _CarParts;
+   // public List<Mater>
     [Header("Game Objects")]
     public GameObject point1;
     public GameObject point2;
@@ -98,8 +100,9 @@ public class Entscheidungen : MonoBehaviour
         point3.SetActive(toggle);
         point4.SetActive(toggle);
 
-        if(toggle)
+        if (toggle)
         {
+            Debug.Log("ajadjadakdj");
             black_window_rs.GetComponent<Renderer>().sharedMaterial = transparent_mat;
             carpaint_doors.GetComponent<Renderer>().sharedMaterial = transparent_mat;
             chrome_logo_r.GetComponent<Renderer>().sharedMaterial = transparent_mat;
@@ -125,10 +128,11 @@ public class Entscheidungen : MonoBehaviour
             texInt_dashboard.GetComponent<Renderer>().sharedMaterial = transparent_mat;
             white_etron.GetComponent<Renderer>().sharedMaterial = transparent_mat;
             white_etron001.GetComponent<Renderer>().sharedMaterial = transparent_mat;
-            yellow_etron.GetComponent<Renderer>().sharedMaterial = transparent_mat;
+            //yellow_etron.GetComponent<Renderer>().sharedMaterial = transparent_mat;
         }
         else
         {
+            Debug.Log("ajadjadakdj");
             black_window_rs.GetComponent<Renderer>().sharedMaterial = plasticblack;
             carpaint_doors.GetComponent<Renderer>().sharedMaterial = carpaint;
             chrome_logo_r.GetComponent<Renderer>().sharedMaterial = chrome;
