@@ -12,6 +12,8 @@ public class AudiInteractable : MonoBehaviour,IMixedRealityInputHandler
     private MaterialManager _materialManager;
     [SerializeField]
     private List<GameObject> _skipList;
+    [SerializeField]
+    private BoxCollider[] _colliders;
     
     // Start is called before the first frame update
     void Start()
@@ -53,11 +55,11 @@ public class AudiInteractable : MonoBehaviour,IMixedRealityInputHandler
 
     private void singletap()
     {
-       // Debug.Log("Single Tap");
+        _materialManager.TransparentEffect(_skipList);
     }
     private void doubletap()
     {
-       // _materialManager.TransparentEffect(_skipList);
+        _materialManager.ResetMaterial(_colliders);
     }
     private void resettimer()
     {

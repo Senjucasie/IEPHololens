@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using Microsoft.MixedReality.Toolkit.Rendering;
+using Microsoft.MixedReality.Toolkit.UI.BoundsControl;
 
 public class MaterialManager : MonoBehaviour
 {
@@ -10,38 +10,70 @@ public class MaterialManager : MonoBehaviour
     private List<Material> _audiMaterials;
     [SerializeField]
     private Material _transparentMaterial;
+    [SerializeField]
+    private BoxCollider _audiCollider;
+    [SerializeField]
+    private BoundsControl _audiBounds;
+    [SerializeField]
+    private bool _firstPass;
+    [SerializeField]
+    private GameObject _decisionPoints;
     // Start is called before the first frame update
     void Start()
     {
-        TransparentEffect();
-        //_audiParts[0].GetComponent<Renderer>().sharedMaterial = _transparentMaterial;
-        //for (int i = 0; i < _audiParts.Count; i++)
-        //{
-        //    _audiMaterials[i] = _transparentMaterial;
-        //    Debug.Log("asa");
-        //}
+        _firstPass = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-    }
-    public void TransparentEffect( /*List<GameObject> skiplist*/)
-    {
-        for(int i=0;i<_audiParts.Count;i++)
+        if (Input.GetKeyDown(KeyCode.Q))
         {
-            //if(!skiplist.Contains(_audiParts[i]))
+            for (int i = 0; i < _audiParts.Count; i++)
             {
                 _audiParts[i].GetComponent<Renderer>().sharedMaterial = _transparentMaterial;
             }
         }
-    }
-    public void ResetMaterial()
-    {
-        for (int i = 0; i < _audiParts.Count; i++)
+        if (Input.GetKeyDown(KeyCode.W))
         {
-            _audiParts[0].GetComponent<Renderer>().sharedMaterial = _audiMaterials[i];
+            for (int i = 0; i < _audiParts.Count; i++)
+            {
+                _audiParts[i].GetComponent<Renderer>().sharedMaterial = _audiMaterials[i];
+                Debug.Log("going");
+            }
         }
+    }
+    public void TransparentEffect( List<GameObject> skiplist)
+    {
+        if(!_firstPass)
+        {
+        _firstPass = true;
+        }
+        for(int i=0;i<_audiParts.Count;i++)
+        {
+            if(!skiplist.Contains(_audiParts[i]))
+            {
+                _audiParts[i].GetComponent<Renderer>().sharedMaterial = _transparentMaterial;
+            }
+        }
+        _decisionPoints.SetActive(true);
+    }
+    public void ResetMaterial(BoxCollider[] coll)
+    {
+        _decisionPoints.SetActive(false);
+       for (int i=0;i<coll.Length;i++)
+        {
+            coll[i].enabled = false;
+        }
+        if(_firstPass)
+        {
+            for (int i = 0; i < _audiParts.Count; i++)
+            {
+                _audiParts[i].GetComponent<Renderer>().sharedMaterial = _audiMaterials[i];
+                Debug.Log("going");
+            }
+        }
+        _audiCollider.enabled = true;
+        _audiBounds.enabled = true;
     }
 }
