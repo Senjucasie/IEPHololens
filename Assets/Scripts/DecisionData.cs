@@ -5,5 +5,13 @@ public class DecisionDataHolder
 {
     public string Title;
     public string Content;
-    public GameObject UiInstance;
+    public Color Colour;
+
+    public DecisionDataHolder(string title,string content,Color color)
+    {
+        Title = title;
+        Content = content;
+        Colour = color;
+    }
+  
 }

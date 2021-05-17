@@ -14,10 +14,22 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
     {
         [Experimental]
         [SerializeField] private NonNativeKeyboard keyboard = null;
-        public GameObject showComment, commentPrefab;
+        public GameObject content, commentPrefab,title;
+        public TMP_InputField InputDisplay;
+        public UIManager uimanager;
+        [SerializeField]
+        private Transform defaultpos, movepos;
         
         public void showKeyboard()
         {
+            if(uimanager.title)
+            {
+                keyboard.transform.position = movepos.position;
+            }
+            else
+            {
+                keyboard.transform.position = defaultpos.position;
+            }
             keyboard.PresentKeyboard();
 
             keyboard.OnClosed += DisableKeyboard;
@@ -27,7 +39,17 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
         private void UpdateText(string text)
         {
-            showComment.GetComponent<TextMeshPro>().text = text;
+            if (uimanager.title)
+            {
+                title.GetComponent<TextMeshPro>().text = text;
+                InputDisplay.text = text;
+              
+            }
+            else
+            {
+                content.GetComponent<TextMeshPro>().text = text;
+            }
+            
         }
 
         private void DisableKeyboard(object sender, EventArgs e)
@@ -41,7 +63,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
 /*         public void cancelCom()
         {
-            showComment.GetComponent<TextMeshPro>().text = "Leave a comment...";
+            content.GetComponent<TextMeshPro>().text = "Leave a comment...";
             keyboard.OnTextUpdated -= UpdateText;
             keyboard.OnClosed -= DisableKeyboard;
             keyboard.OnTextSubmitted -= DisableKeyboard;
@@ -53,9 +75,9 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         {
             var offset = new Vector3(UnityEngine.Random.Range(-0.0f, 0.0f), UnityEngine.Random.Range(-0.0f, 0.0f), 0.5f);
             var spawnPos = CoreServices.InputSystem.GazeProvider.GazeOrigin + Vector3.ClampMagnitude(CoreServices.InputSystem.GazeProvider.GazeDirection, 0.1f) + offset;
-            commentPrefab.GetComponentInChildren<TextMeshPro>().text = showComment.GetComponent<TextMeshPro>().text;
+            commentPrefab.GetComponentInChildren<TextMeshPro>().text = content.GetComponent<TextMeshPro>().text;
             //Instantiate(commentPrefab, spawnPos, Quaternion.identity);
-            showComment.GetComponent<TextMeshPro>().text = "Leave a comment...";
+            content.GetComponent<TextMeshPro>().text = "Leave a comment...";
 
             GameObject clone = Instantiate(commentPrefab.gameObject, spawnPos, Quaternion.identity) as GameObject;
             clone.transform.parent = GameObject.Find("Menu").transform;
