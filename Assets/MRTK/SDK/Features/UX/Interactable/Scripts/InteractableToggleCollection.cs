@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
 
+
 namespace Microsoft.MixedReality.Toolkit.UI
 {
     /// <summary>
@@ -16,12 +17,12 @@ namespace Microsoft.MixedReality.Toolkit.UI
     {
         [Tooltip("Array of Interactables that will be managed by this controller")]
         [SerializeField, FormerlySerializedAs("ToggleList")]
-        private Interactable[] toggleList;
+        private List<Interactable> toggleList;
 
         /// <summary>
         /// Array of Interactables that will be managed by this controller
         /// </summary>
-        public Interactable[] ToggleList
+        public List<Interactable> ToggleList
         {
             get => toggleList;
             set
@@ -40,7 +41,7 @@ namespace Microsoft.MixedReality.Toolkit.UI
                     // Add listeners to new list
                     AddSelectionListeners();
 
-                    int index = Mathf.Clamp(CurrentIndex, 0, toggleList.Length - 1);
+                    int index = Mathf.Clamp(CurrentIndex, 0, toggleList.Count - 1);
                     SetSelection(index, true, true);
                 }
             }
@@ -78,7 +79,7 @@ namespace Microsoft.MixedReality.Toolkit.UI
                     // Add listeners to each toggle in ToggleList
                     AddSelectionListeners();
 
-                    SetSelection(CurrentIndex, true, true);
+                   SetSelection(CurrentIndex, true, true);
                 }
             }
         }
@@ -92,7 +93,7 @@ namespace Microsoft.MixedReality.Toolkit.UI
         /// </summary>
         public void SetSelection(int index, bool force = false, bool fireOnClick = false)
         {
-            if (index < 0 || ToggleList.Length <= index || ToggleList == null || !isActiveAndEnabled)
+            if (index < 0 || ToggleList.Count <= index || ToggleList == null || !isActiveAndEnabled)
             {
                 Debug.LogWarning("Index out of range of ToggleList: " + index);
                 return;
@@ -116,7 +117,7 @@ namespace Microsoft.MixedReality.Toolkit.UI
         // Interactable
         protected virtual void OnSelection(int index, bool force = false)
         {
-            for (int i = 0; i < ToggleList.Length; ++i)
+            for (int i = 0; i < ToggleList.Count; ++i)
             {
                 ToggleList[i].IsToggled = (i == index);
             }
@@ -127,7 +128,7 @@ namespace Microsoft.MixedReality.Toolkit.UI
         private void AddSelectionListeners()
         {
             // Add listeners to new list
-            for (int i = 0; i < ToggleList.Length; ++i)
+            for (int i = 0; i < ToggleList.Count; ++i)
             {
                 int itemIndex = i;
 

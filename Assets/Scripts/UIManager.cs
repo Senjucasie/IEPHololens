@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using Microsoft.MixedReality.Toolkit.Experimental.UI;
 public class UIManager : MonoBehaviour
 {
+    
     [SerializeField]
     private GameObject Option1UI, Option2UI, QuestionUI;
     [SerializeField]
@@ -11,7 +12,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private DecisionPointManager _decisionPointManager;
     [SerializeField]
-    private TMP_Text _content,_title;
+    private TMP_Text _content,_title,_decisionContent;
     [SerializeField]
     private NonNativeKeyboard _keyboard;
 
@@ -19,6 +20,7 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         title = false;
+        
     }
 
     public void DisplayQuestion()
@@ -49,8 +51,10 @@ public class UIManager : MonoBehaviour
     public void SubmitOption1(GameObject ui)
     {
         _keyboard.Close();
-        _decisionPointManager.AddNewComment(_color, _title.text, _content.text);
+        string txt = "\u2022<indent=.5em>" + _content.text;
+        _decisionPointManager.AddNewComment(_color, _title.text, txt);
         ui.SetActive(false);
+        Debug.Log("coming");
         title = false;
     }
     public void SubmitOption2()
@@ -60,5 +64,17 @@ public class UIManager : MonoBehaviour
     public void Oncolorclicked(Image _image)
     {
          _color = _image.color;
+    }
+
+    public void OnclickDecisionPoint(int index)
+    {
+        _decisionContent.text = _decisionPointManager.Dataholder[index].Content;
+    }
+    public void OnclickOption2(int index)
+    {
+        
+        _decisionPointManager.Dataholder[index].Content = _decisionPointManager.Dataholder[index].Content + "\n"+ "\u2022<indent=.5em>" + _content.text;
+        Option2UI.SetActive(false);
+        
     }
 }
