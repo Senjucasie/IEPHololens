@@ -60,6 +60,9 @@ public class MaterialManager : MonoBehaviour
             }
         }
         _decisionPoints.SetActive(true);
+        _object.enabled = false;
+        _audiCollider.enabled = false;
+        _audiBounds.enabled = false;
     }
     public void ResetMaterial(BoxCollider[] coll)
     {

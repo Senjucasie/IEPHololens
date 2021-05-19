@@ -53,11 +53,11 @@ public class AudiInteractable : MonoBehaviour,IMixedRealityInputHandler
     {
     }
 
-    private void singletap()
+    public void singletap()
     {
         _materialManager.TransparentEffect(_skipList);
     }
-    private void doubletap()
+    public void doubletap()
     {
         _materialManager.ResetMaterial(_colliders);
     }
