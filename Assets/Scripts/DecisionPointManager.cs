@@ -18,10 +18,10 @@ public class DecisionPointManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Dataholder.Add(new DecisionDataHolder("Decision Point1", "\u2022<indent=.5em>I am decision point1", Color.red));
-        Dataholder.Add(new DecisionDataHolder("Decision Point2", "\u2022<indent=.5em>I am decision point2", Color.green));
-        Dataholder.Add(new DecisionDataHolder("Decision Point3", "\u2022<indent=.5em>I am decision point3", Color.green));
-        Dataholder.Add(new DecisionDataHolder("Decision Point4", "\u2022<indent=.5em>I am decision point4", Color.yellow));
+        Dataholder.Add(new DecisionDataHolder("Decision Point1", "\u2022<indent=.5em>decision point1</indent>", Color.red));
+        Dataholder.Add(new DecisionDataHolder("Decision Point2", "\u2022<indent=.5em>decision point2</indent>", Color.green));
+        Dataholder.Add(new DecisionDataHolder("Decision Point3", "\u2022<indent=.5em>decision point3</indent>", Color.green));
+        Dataholder.Add(new DecisionDataHolder("Decision Point4", "\u2022<indent=.5em>decision point4</indent>", Color.yellow));
     }
 
     public void AddNewComment(Color color,string title,string content)

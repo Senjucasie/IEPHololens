@@ -17,7 +17,7 @@ public class UIManager : MonoBehaviour
     private NonNativeKeyboard _keyboard;
     private int _index;
     public bool title,Option1;
-    public GameObject CommentPrefab;
+    public GameObject CommentPrefab,Slate,Commentdiaplay;
     public Transform spawnpos;
     void Start()
     {
@@ -67,7 +67,7 @@ public class UIManager : MonoBehaviour
     public void SubmitOption1()
     {
         _keyboard.Close();
-        string txt = "\u2022<indent=.5em>" + _content.text;
+        string txt = "\u2022<indent=.5em>" + _content.text+ "</indent>";
         _decisionPointManager.AddNewComment(_color, _title.text, txt);
         Option1UI.SetActive(false);
        // Debug.Log("coming");
@@ -75,7 +75,7 @@ public class UIManager : MonoBehaviour
     }
     public void SubmitOption2()
     {
-        _decisionPointManager.Dataholder[_index].Content = _decisionPointManager.Dataholder[_index].Content + "\n" + "\u2022<indent=.5em>" + _content.text;
+        _decisionPointManager.Dataholder[_index].Content = _decisionPointManager.Dataholder[_index].Content+ "\n" + "\u2022<indent=.5em>"  + _content.text+"</indent >";
         title = false;
         _keyboard.Close();
         Option2UI.SetActive(false);
@@ -98,10 +98,23 @@ public class UIManager : MonoBehaviour
 
     public void OnclickDecisionPoint(int index)
     {
-        _decisionContent.text = _decisionPointManager.Dataholder[index].Content;
+        if(index==0)
+        {
+            Commentdiaplay.SetActive(false);
+            Slate.SetActive(true);
+        }
+        else
+        {
+            
+            Slate.SetActive(false);
+            Commentdiaplay.SetActive(true);
+            _decisionContent.text = _decisionPointManager.Dataholder[index].Content;
+        }
+        
     }
     public void OnclickOption2(int index)
     {
+        Debug.Log(index);
         _index = index;
     }
     public void CreateComment()
