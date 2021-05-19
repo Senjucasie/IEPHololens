@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using Microsoft.MixedReality.Toolkit.UI.BoundsControl;
-
+using Microsoft.MixedReality.Toolkit.UI;
 public class MaterialManager : MonoBehaviour
 {
     [SerializeField]
@@ -18,6 +18,9 @@ public class MaterialManager : MonoBehaviour
     private bool _firstPass;
     [SerializeField]
     private GameObject _decisionPoints;
+    [SerializeField]
+    private ObjectManipulator _object;
+    public BoxCollider[] tyre;
     // Start is called before the first frame update
     void Start()
     {
@@ -73,7 +76,18 @@ public class MaterialManager : MonoBehaviour
                 Debug.Log("going");
             }
         }
+        _object.enabled = true;
         _audiCollider.enabled = true;
         _audiBounds.enabled = true;
+    }
+    public void Showtyres()
+    {
+        _object.enabled = false;
+        _audiCollider.enabled = false;
+        _audiBounds.enabled = false;
+        for (int i = 0; i < tyre.Length; i++)
+        {
+            tyre[i].enabled = true;
+        }
     }
 }
