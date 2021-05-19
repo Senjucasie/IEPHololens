@@ -4,9 +4,9 @@ using UnityEngine.UI;
 using Microsoft.MixedReality.Toolkit.Experimental.UI;
 public class UIManager : MonoBehaviour
 {
-    
+
     [SerializeField]
-    private GameObject Option1UI, Option2UI, QuestionUI;
+    private GameObject Option1UI, Option2UI;
     [SerializeField]
     private Color _color;
     [SerializeField]
@@ -15,51 +15,81 @@ public class UIManager : MonoBehaviour
     private TMP_Text _content,_title,_decisionContent;
     [SerializeField]
     private NonNativeKeyboard _keyboard;
-
-    public bool title;
+    private int _index;
+    public bool title,Option1;
+    public GameObject CommentPrefab;
+    public Transform spawnpos;
     void Start()
     {
         title = false;
+        Option1 = false;
+    }
+
+   public void ShowAddDP()
+    {
+        Option1UI.SetActive(true);
+        Option1 = true;
+    }
+    public void ShowAddCommand()
+    {
+        Option2UI.SetActive(true);
+        Option1 = false;
+    }
+
+    public void OnclickTitle()
+    {
+        title = true;
         
     }
-
-    public void DisplayQuestion()
+    public void OnclickDescription()
     {
-        if(!title)
-        QuestionUI.SetActive(true);
+        title = false;
     }
-
-   public void SubmitQuestion(int option)
-    {
+   //public void SubmitQuestion(int option)
+   // {
        
-        QuestionUI.SetActive(false);
-        title = true;
-        if (option==1)
-        {
-            Option1UI.SetActive(true);
-        }
-        else if(option==2)
-        {
-            Option2UI.SetActive(true);
-        }
-        else
-        {
-            Debug.LogError("invalid option");
-        }
-    }
+   //     QuestionUI.SetActive(false);
+   //     title = true;
+   //     if (option==1)
+   //     {
+   //         Option1UI.SetActive(true);
+   //     }
+   //     else if(option==2)
+   //     {
+   //         Option2UI.SetActive(true);
+   //     }
+   //     else
+   //     {
+   //         Debug.LogError("invalid option");
+   //     }
+   // }
 
-    public void SubmitOption1(GameObject ui)
+    public void SubmitOption1()
     {
         _keyboard.Close();
         string txt = "\u2022<indent=.5em>" + _content.text;
         _decisionPointManager.AddNewComment(_color, _title.text, txt);
-        ui.SetActive(false);
-        Debug.Log("coming");
+        Option1UI.SetActive(false);
+       // Debug.Log("coming");
         title = false;
     }
     public void SubmitOption2()
     {
-
+        _decisionPointManager.Dataholder[_index].Content = _decisionPointManager.Dataholder[_index].Content + "\n" + "\u2022<indent=.5em>" + _content.text;
+        title = false;
+        _keyboard.Close();
+        Option2UI.SetActive(false);
+        CreateComment();
+    }
+    public void Canceloption1()
+    {
+        Option1UI.SetActive(false);
+        _keyboard.Close();
+    }
+    public void Canceloption2()
+    {
+        Option2UI.SetActive(false);
+        _keyboard.Close();
     }
     public void Oncolorclicked(Image _image)
     {
@@ -72,9 +102,12 @@ public class UIManager : MonoBehaviour
     }
     public void OnclickOption2(int index)
     {
-        
-        _decisionPointManager.Dataholder[index].Content = _decisionPointManager.Dataholder[index].Content + "\n"+ "\u2022<indent=.5em>" + _content.text;
-        Option2UI.SetActive(false);
-        
+        _index = index;
+    }
+    public void CreateComment()
+    {
+        GameObject comment=Instantiate(CommentPrefab, spawnpos.position,Quaternion.identity);
+        comment.transform.GetChild(0).GetComponent<TextMeshPro>().text = _decisionPointManager.Dataholder[_index].Title;
+        comment.transform.GetChild(1).GetComponent<TextMeshPro>().text = _decisionPointManager.Dataholder[_index].Content;
     }
 }

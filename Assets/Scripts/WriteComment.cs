@@ -15,21 +15,22 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         [Experimental]
         [SerializeField] private NonNativeKeyboard keyboard = null;
         public GameObject content, commentPrefab,title;
-        public TMP_InputField InputDisplay;
+        public TMP_InputField DescrptionOption1,TitleOption1,DescriptionOption2;
         public UIManager uimanager;
         [SerializeField]
         private Transform defaultpos, movepos;
         
         public void showKeyboard()
         {
-            if(uimanager.title)
-            {
-                keyboard.transform.position = movepos.position;
-            }
-            else
-            {
-                keyboard.transform.position = defaultpos.position;
-            }
+            keyboard.Close();
+            //if(uimanager.title)
+            //{
+            //    keyboard.transform.position = movepos.position;
+            //}
+            //else
+            //{
+            //    keyboard.transform.position = defaultpos.position;
+            //}
             keyboard.PresentKeyboard();
 
             keyboard.OnClosed += DisableKeyboard;
@@ -39,16 +40,26 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 
         private void UpdateText(string text)
         {
-            if (uimanager.title)
+            if(uimanager.Option1)
             {
-                title.GetComponent<TextMeshPro>().text = text;
-                InputDisplay.text = text;
-              
+                if (uimanager.title)
+                {
+                    title.GetComponent<TextMeshPro>().text = text;
+                    TitleOption1.text = text;
+
+                }
+                else
+                {
+                    content.GetComponent<TextMeshPro>().text = text;
+                    DescrptionOption1.text = text;
+                }
             }
             else
             {
                 content.GetComponent<TextMeshPro>().text = text;
+                DescriptionOption2.text = text;
             }
+           
             
         }
 
