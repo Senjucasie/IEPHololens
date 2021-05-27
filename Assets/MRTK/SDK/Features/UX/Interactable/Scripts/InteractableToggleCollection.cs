@@ -27,6 +27,7 @@ namespace Microsoft.MixedReality.Toolkit.UI
             get => toggleList;
             set
             {
+               // Debug.Log("coming");
                 if (value != null && toggleList != value)
                 {
                     if (toggleList != null)
@@ -78,8 +79,8 @@ namespace Microsoft.MixedReality.Toolkit.UI
                 {
                     // Add listeners to each toggle in ToggleList
                     AddSelectionListeners();
-
-                   SetSelection(CurrentIndex, true, true);
+                    //Debug.Log("Start");
+                    SetSelection(CurrentIndex, true, true);
                 }
             }
         }
@@ -117,6 +118,7 @@ namespace Microsoft.MixedReality.Toolkit.UI
         // Interactable
         protected virtual void OnSelection(int index, bool force = false)
         {
+            //Debug.Log("OnSelection");
             for (int i = 0; i < ToggleList.Count; ++i)
             {
                 ToggleList[i].IsToggled = (i == index);

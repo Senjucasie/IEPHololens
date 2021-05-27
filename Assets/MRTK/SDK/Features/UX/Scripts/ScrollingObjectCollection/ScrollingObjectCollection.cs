@@ -1967,6 +1967,7 @@ namespace Microsoft.MixedReality.Toolkit.UI
         /// </summary>
         public void Reset()
         {
+            Debug.Log("REset");
             ResetInteraction();
             UpdateContent();
             ResetScrollOffset();
@@ -1977,6 +1978,7 @@ namespace Microsoft.MixedReality.Toolkit.UI
         /// </summary>
         public void AddContent(GameObject content)
         {
+            Debug.Log("Addcontent");
             content.transform.parent = ScrollContainer.transform;
             Reset();
         }

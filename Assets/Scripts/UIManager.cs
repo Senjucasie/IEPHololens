@@ -12,7 +12,9 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private DecisionPointManager _decisionPointManager;
     [SerializeField]
-    private TMP_Text _content,_title,_decisionContent;
+    private TMP_Text _decisionContent;
+    [SerializeField]
+    private TMP_InputField _descriptionDP,_descriptionComment,_title;
     [SerializeField]
     private NonNativeKeyboard _keyboard;
     private int _index;
@@ -67,7 +69,7 @@ public class UIManager : MonoBehaviour
     public void SubmitOption1()
     {
         _keyboard.Close();
-        string txt = "\u2022<indent=.5em>" + _content.text+ "</indent>";
+        string txt = "\u2022<indent=.5em>" + _descriptionDP.text+ "</indent>";
         _decisionPointManager.AddNewComment(_color, _title.text, txt);
         Option1UI.SetActive(false);
        // Debug.Log("coming");
@@ -75,7 +77,7 @@ public class UIManager : MonoBehaviour
     }
     public void SubmitOption2()
     {
-        _decisionPointManager.Dataholder[_index].Content = _decisionPointManager.Dataholder[_index].Content+ "\n" + "\u2022<indent=.5em>"  + _content.text+"</indent >";
+        _decisionPointManager.Dataholder[_index].Content = _decisionPointManager.Dataholder[_index].Content+ "\n" + "\u2022<indent=.5em>"  + _descriptionComment.text+"</indent >";
         title = false;
         _keyboard.Close();
         Option2UI.SetActive(false);

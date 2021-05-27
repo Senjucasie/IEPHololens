@@ -9,6 +9,7 @@ public class OnClickDecision : MonoBehaviour
 
     public void Onclick()
     {
+        // Debug.Log(transform.GetSiblingIndex());
         _uimanager.OnclickDecisionPoint(transform.GetSiblingIndex());
     }
     

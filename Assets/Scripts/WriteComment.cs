@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+
 namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 {
     /// <summary>
@@ -14,14 +15,16 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
     {
         [Experimental]
         [SerializeField] private NonNativeKeyboard keyboard = null;
-        public GameObject content, commentPrefab,title;
+       // public GameObject content, commentPrefab,title;
         public TMP_InputField DescrptionOption1,TitleOption1,DescriptionOption2;
+        //public TextMeshProUGUI DescrptionOption1, TitleOption1, DescriptionOption2;
         public UIManager uimanager;
         [SerializeField]
         private Transform defaultpos, movepos;
         
         public void showKeyboard()
         {
+#if UNITY_EDITOR
             keyboard.Close();
             //if(uimanager.title)
             //{
@@ -36,6 +39,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             keyboard.OnClosed += DisableKeyboard;
             keyboard.OnTextSubmitted += DisableKeyboard;
             keyboard.OnTextUpdated += UpdateText;
+#endif
         }
 
         private void UpdateText(string text)
@@ -44,23 +48,26 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             {
                 if (uimanager.title)
                 {
-                    title.GetComponent<TextMeshPro>().text = text;
+                    //title.GetComponent<TextMeshPro>().text = text;
+                 #if UNITY_EDITOR
                     TitleOption1.text = text;
-
+                 #endif
                 }
                 else
                 {
-                    content.GetComponent<TextMeshPro>().text = text;
+                #if UNITY_EDITOR
                     DescrptionOption1.text = text;
+                #endif
                 }
             }
             else
             {
-                content.GetComponent<TextMeshPro>().text = text;
+            #if UNITY_EDITOR
                 DescriptionOption2.text = text;
+            #endif
             }
-           
-            
+
+
         }
 
         private void DisableKeyboard(object sender, EventArgs e)
@@ -82,16 +89,16 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             keyboard.Close();
         } */
 
-        public void createComment()
-        {
-            var offset = new Vector3(UnityEngine.Random.Range(-0.0f, 0.0f), UnityEngine.Random.Range(-0.0f, 0.0f), 0.5f);
-            var spawnPos = CoreServices.InputSystem.GazeProvider.GazeOrigin + Vector3.ClampMagnitude(CoreServices.InputSystem.GazeProvider.GazeDirection, 0.1f) + offset;
-            commentPrefab.GetComponentInChildren<TextMeshPro>().text = content.GetComponent<TextMeshPro>().text;
-            //Instantiate(commentPrefab, spawnPos, Quaternion.identity);
-            content.GetComponent<TextMeshPro>().text = "Leave a comment...";
+        //public void createComment()
+        //{
+        //    var offset = new Vector3(UnityEngine.Random.Range(-0.0f, 0.0f), UnityEngine.Random.Range(-0.0f, 0.0f), 0.5f);
+        //    var spawnPos = CoreServices.InputSystem.GazeProvider.GazeOrigin + Vector3.ClampMagnitude(CoreServices.InputSystem.GazeProvider.GazeDirection, 0.1f) + offset;
+        //    commentPrefab.GetComponentInChildren<TextMeshPro>().text = content.GetComponent<TextMeshPro>().text;
+        //    //Instantiate(commentPrefab, spawnPos, Quaternion.identity);
+        //    content.GetComponent<TextMeshPro>().text = "Leave a comment...";
 
-            GameObject clone = Instantiate(commentPrefab.gameObject, spawnPos, Quaternion.identity) as GameObject;
-            clone.transform.parent = GameObject.Find("Menu").transform;
-        }
+        //    GameObject clone = Instantiate(commentPrefab.gameObject, spawnPos, Quaternion.identity) as GameObject;
+        //    clone.transform.parent = GameObject.Find("Menu").transform;
+        //}
     }
 }
