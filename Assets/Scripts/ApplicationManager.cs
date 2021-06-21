@@ -28,9 +28,13 @@ public class ApplicationManager : MonoBehaviour
     private RadialView _radialView;
     [SerializeField]
     public float _timeDelay;
+    [SerializeField]
+    private BoxCollider[] _tyreCollider;
+    private bool _firstPass;
     void Start()
     {
-        CurrentMode = Modes.Expert;
+        _firstPass = true;
+        CurrentMode = Modes.Simple;
     }
 
     // Update is called once per frame
