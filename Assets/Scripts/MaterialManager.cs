@@ -27,25 +27,7 @@ public class MaterialManager : MonoBehaviour
         _firstPass = false;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //if (Input.GetKeyDown(KeyCode.Q))
-        //{
-        //    for (int i = 0; i < _audiParts.Count; i++)
-        //    {
-        //        _audiParts[i].GetComponent<Renderer>().sharedMaterial = _transparentMaterial;
-        //    }
-        //}
-        //if (Input.GetKeyDown(KeyCode.W))
-        //{
-        //    for (int i = 0; i < _audiParts.Count; i++)
-        //    {
-        //        _audiParts[i].GetComponent<Renderer>().sharedMaterial = _audiMaterials[i];
-        //        Debug.Log("going");
-        //    }
-        //}
-    }
+   
     public void TransparentEffect( List<GameObject> skiplist)
     {
         if(!_firstPass)

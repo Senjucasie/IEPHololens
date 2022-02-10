@@ -9,17 +9,16 @@ public class ApplicationManager : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField]
-    private GameObject Option1, Option2, Keyboard,_decisionPoints;
+    private GameObject _option1, _option2, _keyBoard,_decisionPoints;
     [SerializeField]
     private Transform _menuPos;
     [SerializeField]
     private GameObject _menu,_car;
-    [SerializeField]
-    private Vector3 _defaultScale;
+    private readonly Vector3 _defaultScale=new Vector3(0.014f,0.014f,0.014f);
     public enum Modes {Expert,Simple,Reset }
     private  Modes CurrentMode;
     [SerializeField]
-    private ObjectManipulator _object;
+    private ObjectManipulator _audiManipulator;
     [SerializeField]
     private BoundsControl _audiBounds;
     [SerializeField]
@@ -30,61 +29,60 @@ public class ApplicationManager : MonoBehaviour
     public float _timeDelay;
     [SerializeField]
     private BoxCollider[] _tyreCollider;
+    private ApplicationState _currentState;
     private bool _firstPass;
+    private Simple _simple;
+    private Expert _expert;
+    private Reset _reset;
+
+
+    public BoxCollider AudiCollider{ get => _audiCollider; }
+    public BoundsControl AudiBounds{get => _audiBounds;}
+    public ObjectManipulator AudiManipulator{get => _audiManipulator;}
+    public GameObject Option1 { get => _option1; }
+    public GameObject Option2 { get => _option2; }
+    public GameObject Menu { get => _menu; }
+    public GameObject Keyboard { get => _keyBoard; }
+    public GameObject DecisionPoints { get => _decisionPoints; }
+    public GameObject Car { get => _car; }
+    public RadialView AudiRadial { get => _radialView; }
+    public Vector3 DefaultScale { get => _defaultScale; }
+    public Transform Menutransform { get => _menuPos; }
+
+
+
     void Start()
     {
         _firstPass = true;
         CurrentMode = Modes.Simple;
+        _simple = new Simple(this);
+        _expert = new Expert(this);
+        _reset = new Reset(this,_timeDelay);
+        _currentState = _simple;
     }
-
-    // Update is called once per frame
-    void Update()
+   
+    public void SetState(ApplicationState newstate)
     {
-        
+        _currentState.Exit();
+        _currentState = newstate;
+        _currentState.Enter();
     }
     public void ExpertMode()
     {
-        if (CurrentMode == Modes.Simple)
-        {
-            _menu.SetActive(true);
-            Option1.SetActive(false);
-            Option2.SetActive(false);
-            Keyboard.SetActive(false);
-            _decisionPoints.SetActive(false);
-            _audiBounds.enabled = true;
-            _audiCollider.enabled = true;
-            _object.enabled = true;
-            CurrentMode = Modes.Expert;
-        }
+        SetState(_expert);
+        _currentState.Update();
     }
+
     public void SimpleMode()
     {
-        if(CurrentMode==Modes.Expert)
-        {
-            _menu.SetActive(false);
-            _audiBounds.enabled = false;
-            _audiCollider.enabled = false;
-            _object.enabled = false;
-            CurrentMode = Modes.Simple;
-
-        }
+        SetState(_simple);
+        _currentState.Update();
     }
+
     public void ResetMode()
     {
-        if(CurrentMode==Modes.Expert)
-        {
-            _car.transform.localScale = _defaultScale;
-            _radialView.enabled = true;
-            Invoke("delayreset", _timeDelay);
-           
-        }
-
+        SetState(_reset);
+        _currentState.Update();
     }
-    private void delayreset()
-    {
-        _radialView.enabled = false;
-        _menu.transform.position = _menuPos.position;
-        _menu.transform.rotation = _menuPos.transform.rotation;
-        
-    }
+  
 }
